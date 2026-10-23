@@ -1,0 +1,394 @@
+{
+  "test_candidate_runs_valid_batch_and_publishes": [
+    {
+      "behavior_id": "GATE-01",
+      "token": "test_candidate_runs_valid_batch_and_publishes"
+    }
+  ],
+  "test_branch_meter_correspondence_is_recovered": [
+    {
+      "behavior_id": "MAP-01",
+      "token": "MAP-01"
+    },
+    {
+      "behavior_id": "MAP-05",
+      "token": "MAP-05"
+    },
+    {
+      "behavior_id": "MAP-08",
+      "token": "MAP-08"
+    }
+  ],
+  "test_inverted_valve_signatures_recover_orientation": [
+    {
+      "behavior_id": "MAP-02",
+      "token": "MAP-02"
+    },
+    {
+      "behavior_id": "MAP-06",
+      "token": "MAP-06"
+    }
+  ],
+  "test_unique_assignment_margin_is_positive": [
+    {
+      "behavior_id": "MAP-03",
+      "token": "test_unique_assignment_margin_is_positive"
+    }
+  ],
+  "test_assignment_and_balance_rows_follow_business_order": [
+    {
+      "behavior_id": "MAP-04",
+      "token": "test_assignment_and_balance_rows_follow_business_order"
+    }
+  ],
+  "test_aggregate_effective_ua_matches_transient_inverse": [
+    {
+      "behavior_id": "LOSS-01",
+      "token": "LOSS-01"
+    },
+    {
+      "behavior_id": "LOSS-04",
+      "token": "LOSS-04"
+    }
+  ],
+  "test_branch_ua_and_loss_use_lagged_degree_hours": [
+    {
+      "behavior_id": "LOSS-02",
+      "token": "test_branch_ua_and_loss_use_lagged_degree_hours"
+    }
+  ],
+  "test_system_heat_balance_closes_with_signed_error": [
+    {
+      "behavior_id": "LOSS-03",
+      "token": "test_system_heat_balance_closes_with_signed_error"
+    }
+  ],
+  "test_repeating_same_batch_is_byte_idempotent": [
+    {
+      "behavior_id": "LEDGER-01",
+      "token": "LEDGER-01"
+    },
+    {
+      "behavior_id": "LEDGER-07",
+      "token": "LEDGER-07"
+    }
+  ],
+  "test_new_batch_appends_exactly_one_ledger_line": [
+    {
+      "behavior_id": "LEDGER-02",
+      "token": "test_new_batch_appends_exactly_one_ledger_line"
+    }
+  ],
+  "test_later_batch_keeps_earlier_ledger_bytes": [
+    {
+      "behavior_id": "LEDGER-03",
+      "token": "test_later_batch_keeps_earlier_ledger_bytes"
+    }
+  ],
+  "test_ledger_line_has_exact_compact_schema": [
+    {
+      "behavior_id": "LEDGER-04",
+      "token": "LEDGER-04"
+    },
+    {
+      "behavior_id": "LEDGER-06",
+      "token": "LEDGER-06"
+    },
+    {
+      "behavior_id": "LEDGER-08",
+      "token": "LEDGER-08"
+    }
+  ],
+  "test_corrupt_ledger_is_refused_without_side_effects": [
+    {
+      "behavior_id": "LEDGER-05",
+      "token": "test_corrupt_ledger_is_refused_without_side_effects"
+    }
+  ],
+  "test_input_failure_preserves_existing_output_bytes": [
+    {
+      "behavior_id": "PUBLISH-01",
+      "token": "PUBLISH-01"
+    },
+    {
+      "behavior_id": "PUBLISH-03",
+      "token": "PUBLISH-03"
+    }
+  ],
+  "test_ledger_target_failure_restores_old_result": [
+    {
+      "behavior_id": "PUBLISH-02",
+      "token": "PUBLISH-02"
+    },
+    {
+      "behavior_id": "PUBLISH-04",
+      "token": "PUBLISH-04"
+    },
+    {
+      "behavior_id": "PUBLISH-05",
+      "token": "PUBLISH-05"
+    }
+  ],
+  "test_valid_batch_recovers_mapping_inverts_loss_and_appends_ledger": [
+    {
+      "behavior_id": "COMBINE-01",
+      "token": "COMBINE-01"
+    },
+    {
+      "behavior_id": "MAP-07",
+      "token": "MAP-07"
+    },
+    {
+      "behavior_id": "COMBINE-02",
+      "token": "COMBINE-02"
+    }
+  ],
+  "test_successful_run_is_silent": [
+    {
+      "behavior_id": "OUTPUT-01",
+      "token": "test_successful_run_is_silent"
+    }
+  ],
+  "test_result_top_level_keys_and_order_are_exact": [
+    {
+      "behavior_id": "RESULT-01",
+      "token": "RESULT-01"
+    },
+    {
+      "behavior_id": "RESULT-08",
+      "token": "RESULT-08"
+    },
+    {
+      "behavior_id": "RESULT-09",
+      "token": "RESULT-09"
+    },
+    {
+      "behavior_id": "RESULT-10",
+      "token": "RESULT-10"
+    }
+  ],
+  "test_assignment_objects_have_exact_keys_and_types": [
+    {
+      "behavior_id": "RESULT-02",
+      "token": "test_assignment_objects_have_exact_keys_and_types"
+    }
+  ],
+  "test_branch_balance_objects_have_exact_keys_and_types": [
+    {
+      "behavior_id": "RESULT-03",
+      "token": "test_branch_balance_objects_have_exact_keys_and_types"
+    }
+  ],
+  "test_system_and_inversion_objects_have_exact_keys_and_types": [
+    {
+      "behavior_id": "RESULT-04",
+      "token": "test_system_and_inversion_objects_have_exact_keys_and_types"
+    }
+  ],
+  "test_result_uses_compact_utf8_json_with_one_newline": [
+    {
+      "behavior_id": "RESULT-05",
+      "token": "test_result_uses_compact_utf8_json_with_one_newline"
+    }
+  ],
+  "test_branch_flow_volume_uses_history_and_interval": [
+    {
+      "behavior_id": "RESULT-06",
+      "token": "test_branch_flow_volume_uses_history_and_interval"
+    }
+  ],
+  "test_batch_key_consumes_raw_input_bytes": [
+    {
+      "behavior_id": "BATCH-01",
+      "token": "BATCH-01"
+    },
+    {
+      "behavior_id": "BATCH-02",
+      "token": "BATCH-02"
+    }
+  ],
+  "test_duplicate_station_key_is_refused": [
+    {
+      "behavior_id": "JSON-01",
+      "token": "test_duplicate_station_key_is_refused"
+    }
+  ],
+  "test_duplicate_nested_branch_key_is_refused": [
+    {
+      "behavior_id": "JSON-02",
+      "token": "test_duplicate_nested_branch_key_is_refused"
+    }
+  ],
+  "test_duplicate_nested_meter_key_is_refused": [
+    {
+      "behavior_id": "JSON-03",
+      "token": "test_duplicate_nested_meter_key_is_refused"
+    }
+  ],
+  "test_malformed_json_is_refused_without_traceback": [
+    {
+      "behavior_id": "JSON-04",
+      "token": "JSON-04"
+    },
+    {
+      "behavior_id": "OUTPUT-02",
+      "token": "OUTPUT-02"
+    }
+  ],
+  "test_station_missing_key_is_refused": [
+    {
+      "behavior_id": "SCHEMA-01",
+      "token": "SCHEMA-01"
+    },
+    {
+      "behavior_id": "SCHEMA-17",
+      "token": "SCHEMA-17"
+    }
+  ],
+  "test_station_extra_key_is_refused": [
+    {
+      "behavior_id": "SCHEMA-02",
+      "token": "test_station_extra_key_is_refused"
+    }
+  ],
+  "test_station_bool_integer_type_is_refused": [
+    {
+      "behavior_id": "SCHEMA-03",
+      "token": "test_station_bool_integer_type_is_refused"
+    }
+  ],
+  "test_branch_missing_key_is_refused": [
+    {
+      "behavior_id": "SCHEMA-04",
+      "token": "test_branch_missing_key_is_refused"
+    }
+  ],
+  "test_branch_extra_key_is_refused": [
+    {
+      "behavior_id": "SCHEMA-05",
+      "token": "SCHEMA-05"
+    },
+    {
+      "behavior_id": "SCHEMA-15",
+      "token": "SCHEMA-15"
+    },
+    {
+      "behavior_id": "SCHEMA-19",
+      "token": "SCHEMA-19"
+    }
+  ],
+  "test_branch_wrong_type_is_refused": [
+    {
+      "behavior_id": "SCHEMA-06",
+      "token": "test_branch_wrong_type_is_refused"
+    }
+  ],
+  "test_meter_missing_key_is_refused": [
+    {
+      "behavior_id": "SCHEMA-07",
+      "token": "test_meter_missing_key_is_refused"
+    }
+  ],
+  "test_meter_extra_key_is_refused": [
+    {
+      "behavior_id": "SCHEMA-08",
+      "token": "SCHEMA-08"
+    },
+    {
+      "behavior_id": "SCHEMA-16",
+      "token": "SCHEMA-16"
+    },
+    {
+      "behavior_id": "SCHEMA-20",
+      "token": "SCHEMA-20"
+    }
+  ],
+  "test_meter_wrong_array_element_type_is_refused": [
+    {
+      "behavior_id": "SCHEMA-09",
+      "token": "test_meter_wrong_array_element_type_is_refused"
+    }
+  ],
+  "test_duplicate_branch_id_is_refused": [
+    {
+      "behavior_id": "SCHEMA-10",
+      "token": "test_duplicate_branch_id_is_refused"
+    }
+  ],
+  "test_meter_count_mismatch_is_refused": [
+    {
+      "behavior_id": "SCHEMA-11",
+      "token": "SCHEMA-11"
+    },
+    {
+      "behavior_id": "SCHEMA-21",
+      "token": "SCHEMA-21"
+    }
+  ],
+  "test_eighteen_branches_are_accepted": [
+    {
+      "behavior_id": "BOUND-01",
+      "token": "test_eighteen_branches_are_accepted"
+    }
+  ],
+  "test_nineteen_branches_are_refused": [
+    {
+      "behavior_id": "BOUND-02",
+      "token": "test_nineteen_branches_are_refused"
+    }
+  ],
+  "test_symlinked_input_directory_is_refused": [
+    {
+      "behavior_id": "FS-01",
+      "token": "test_symlinked_input_directory_is_refused"
+    }
+  ],
+  "test_output_numbers_use_six_decimal_rounding": [
+    {
+      "behavior_id": "RESULT-07",
+      "token": "RESULT-07"
+    },
+    {
+      "behavior_id": "RESULT-13",
+      "token": "RESULT-13"
+    }
+  ],
+  "test_result_pairing_and_sample_count_come_from_input": [
+    {
+      "behavior_id": "RESULT-11",
+      "token": "RESULT-11"
+    },
+    {
+      "behavior_id": "RESULT-12",
+      "token": "RESULT-12"
+    }
+  ],
+  "test_station_array_length_mismatch_is_refused": [
+    {
+      "behavior_id": "SCHEMA-12",
+      "token": "SCHEMA-12"
+    },
+    {
+      "behavior_id": "SCHEMA-18",
+      "token": "SCHEMA-18"
+    }
+  ],
+  "test_meter_nonpositive_flow_is_refused": [
+    {
+      "behavior_id": "SCHEMA-13",
+      "token": "SCHEMA-13"
+    }
+  ],
+  "test_empty_command_path_is_refused": [
+    {
+      "behavior_id": "FS-02",
+      "token": "FS-02"
+    }
+  ],
+  "test_eighteen_branch_batch_finishes_within_public_limit": [
+    {
+      "behavior_id": "PERF-01",
+      "token": "PERF-01"
+    }
+  ]
+}

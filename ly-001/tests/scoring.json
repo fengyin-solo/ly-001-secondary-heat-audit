@@ -1,0 +1,248 @@
+{
+  "schema_version": 1,
+  "weight_policy": {
+    "version": 1,
+    "basis": "business_priority",
+    "core_min_share": 0.5
+  },
+  "gate_tests": [
+    "test_outputs.py::test_candidate_runs_valid_batch_and_publishes"
+  ],
+  "tests": {
+    "test_outputs.py::test_branch_meter_correspondence_is_recovered": {
+      "weight": 0.05,
+      "priority": "core",
+      "rationale": "未标号表计到支路的对应是整个二次网热平衡和批次结论的前提。"
+    },
+    "test_outputs.py::test_inverted_valve_signatures_recover_orientation": {
+      "weight": 0.05,
+      "priority": "core",
+      "rationale": "现场反向接线必须被识别，否则阀门响应会把相邻支路错配到同一方向。"
+    },
+    "test_outputs.py::test_unique_assignment_margin_is_positive": {
+      "weight": 0.05,
+      "priority": "core",
+      "rationale": "配对只有具备正的第二优余量，运行员才能把结果作为唯一交接依据。"
+    },
+    "test_outputs.py::test_aggregate_effective_ua_matches_transient_inverse": {
+      "weight": 0.05,
+      "priority": "core",
+      "rationale": "聚合有效传热系数体现非稳态反演是否真正使用了滞后度时历史。"
+    },
+    "test_outputs.py::test_branch_ua_and_loss_use_lagged_degree_hours": {
+      "weight": 0.05,
+      "priority": "core",
+      "rationale": "支路热损必须由各自传热系数和滞后温差闭合，不能平摊站级差额。"
+    },
+    "test_outputs.py::test_system_heat_balance_closes_with_signed_error": {
+      "weight": 0.05,
+      "priority": "core",
+      "rationale": "站级供入、末端需求和热损之间的带符号闭合是交接判断的核心守恒证据。"
+    },
+    "test_outputs.py::test_repeating_same_batch_is_byte_idempotent": {
+      "weight": 0.05,
+      "priority": "core",
+      "rationale": "同一夜班数据重放时结果和台账必须逐字节稳定，避免值班员看到重复批次。"
+    },
+    "test_outputs.py::test_new_batch_appends_exactly_one_ledger_line": {
+      "weight": 0.05,
+      "priority": "core",
+      "rationale": "新批次只能追加一条摘要，重复或漏记都会破坏跨班次的热损追溯。"
+    },
+    "test_outputs.py::test_later_batch_keeps_earlier_ledger_bytes": {
+      "weight": 0.05,
+      "priority": "core",
+      "rationale": "后续批次不得改写历史台账，旧班次字节是运行审计的不可变依据。"
+    },
+    "test_outputs.py::test_input_failure_preserves_existing_output_bytes": {
+      "weight": 0.05,
+      "priority": "core",
+      "rationale": "输入校验失败时旧交接结果必须原样保留，不能留下半成品供下一班误用。"
+    },
+    "test_outputs.py::test_ledger_target_failure_restores_old_result": {
+      "weight": 0.05,
+      "priority": "core",
+      "rationale": "台账目标发布失败时结果必须回滚，否则结果与台账会出现跨文件不一致。"
+    },
+    "test_outputs.py::test_valid_batch_recovers_mapping_inverts_loss_and_appends_ledger": {
+      "weight": 0.05,
+      "priority": "core",
+      "rationale": "完整批次必须把归位、热损反演和跨批台账三条主业务链一次闭合。"
+    },
+    "test_outputs.py::test_assignment_and_balance_rows_follow_business_order": {
+      "weight": 0.011,
+      "priority": "supporting",
+      "rationale": "业务行按支路稳定排序，交接人员才能逐行核对而不受表计文件顺序影响。"
+    },
+    "test_outputs.py::test_successful_run_is_silent": {
+      "weight": 0.011,
+      "priority": "supporting",
+      "rationale": "调度批处理依赖静默成功，日志噪声会掩盖真正的业务拒绝。"
+    },
+    "test_outputs.py::test_result_top_level_keys_and_order_are_exact": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "顶层八键和固定顺序是下游交接程序消费结果文件的稳定封套。"
+    },
+    "test_outputs.py::test_assignment_objects_have_exact_keys_and_types": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "归位记录的字段和数值类型必须固定，避免下游把方向或误差字段误读。"
+    },
+    "test_outputs.py::test_branch_balance_objects_have_exact_keys_and_types": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "支路热平衡字段完整且类型正确，才能直接进入换热站交接明细。"
+    },
+    "test_outputs.py::test_system_and_inversion_objects_have_exact_keys_and_types": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "站级守恒与反演摘要必须保持独立结构，不能被支路明细混写。"
+    },
+    "test_outputs.py::test_result_uses_compact_utf8_json_with_one_newline": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "紧凑字节和单尾换行保证结果摘要及跨批重复运行的字节稳定。"
+    },
+    "test_outputs.py::test_branch_flow_volume_uses_history_and_interval": {
+      "weight": 0.011,
+      "priority": "supporting",
+      "rationale": "支路累计水量必须按实际采样间隔换算，否则热损交接会误读运行水量。"
+    },
+    "test_outputs.py::test_batch_key_consumes_raw_input_bytes": {
+      "weight": 0.011,
+      "priority": "recovery",
+      "rationale": "批次键绑定原始 JSON 字节，等价重排不能被误当成同一批输入。"
+    },
+    "test_outputs.py::test_ledger_line_has_exact_compact_schema": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "台账摘要行必须可直接追加并被后续批次严格解析。"
+    },
+    "test_outputs.py::test_corrupt_ledger_is_refused_without_side_effects": {
+      "weight": 0.011,
+      "priority": "recovery",
+      "rationale": "损坏台账应阻断发布并保留旧文件，避免把历史审计链改坏。"
+    },
+    "test_outputs.py::test_duplicate_station_key_is_refused": {
+      "weight": 0.011,
+      "priority": "boundary",
+      "rationale": "站级重复键会隐藏互相矛盾的采样值，必须作为整批拒绝条件。"
+    },
+    "test_outputs.py::test_duplicate_nested_branch_key_is_refused": {
+      "weight": 0.011,
+      "priority": "boundary",
+      "rationale": "嵌套支路重复键可能改变设计流量，不能只检查顶层重复。"
+    },
+    "test_outputs.py::test_duplicate_nested_meter_key_is_refused": {
+      "weight": 0.011,
+      "priority": "boundary",
+      "rationale": "表计记录内重复键会破坏隐藏对应输入的可信性，必须整批拒绝。"
+    },
+    "test_outputs.py::test_malformed_json_is_refused_without_traceback": {
+      "weight": 0.011,
+      "priority": "boundary",
+      "rationale": "坏 JSON 应给出单行业务拒绝而非堆栈，让夜班人员能直接处理。"
+    },
+    "test_outputs.py::test_station_missing_key_is_refused": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "缺少站级字段会使热平衡定义不完整，必须在计算和发布前拒绝。"
+    },
+    "test_outputs.py::test_station_extra_key_is_refused": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "未约定的站级字段可能来自另一版导入器，严格封套防止版本混用。"
+    },
+    "test_outputs.py::test_station_bool_integer_type_is_refused": {
+      "weight": 0.011,
+      "priority": "boundary",
+      "rationale": "布尔值伪装成采样间隔会改变时间换算，必须与整数严格区分。"
+    },
+    "test_outputs.py::test_branch_missing_key_is_refused": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "支路记录缺字段就无法建立阀门与波达时延的完整配对特征。"
+    },
+    "test_outputs.py::test_branch_extra_key_is_refused": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "支路多余字段意味着输入版本不一致，不能静默带入未定义语义。"
+    },
+    "test_outputs.py::test_branch_wrong_type_is_refused": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "设计流量字符串会破坏数值配对和守恒计算，必须在入口拒绝。"
+    },
+    "test_outputs.py::test_meter_missing_key_is_refused": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "表计缺少历史或签名字段就无法证明唯一的支路对应。"
+    },
+    "test_outputs.py::test_meter_extra_key_is_refused": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "表计多余字段可能携带另一批次的标签，严格 schema 防止串批。"
+    },
+    "test_outputs.py::test_meter_wrong_array_element_type_is_refused": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "历史数组中的字符串会造成非数值流量并污染热损反演。"
+    },
+    "test_outputs.py::test_duplicate_branch_id_is_refused": {
+      "weight": 0.011,
+      "priority": "boundary",
+      "rationale": "重复支路号会使一对一配对失去业务含义并让台账摘要指向错误对象。"
+    },
+    "test_outputs.py::test_meter_count_mismatch_is_refused": {
+      "weight": 0.011,
+      "priority": "boundary",
+      "rationale": "表计与支路数量不等时无法形成完整一一配对，必须拒绝整批。"
+    },
+    "test_outputs.py::test_eighteen_branches_are_accepted": {
+      "weight": 0.011,
+      "priority": "boundary",
+      "rationale": "公开上界十八条必须真实可运行，证明算法不是只对小样例有效。"
+    },
+    "test_outputs.py::test_nineteen_branches_are_refused": {
+      "weight": 0.011,
+      "priority": "boundary",
+      "rationale": "超过公开支路上界会破坏已声明的时间预算，必须在计算前拒绝。"
+    },
+    "test_outputs.py::test_symlinked_input_directory_is_refused": {
+      "weight": 0.011,
+      "priority": "boundary",
+      "rationale": "输入目录软链接可能把批次指向错误现场，必须使用真实目录。"
+    },
+    "test_outputs.py::test_station_array_length_mismatch_is_refused": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "站级历史数组长度不一致会让采样段失去统一时间轴，必须拒绝整批。"
+    },
+    "test_outputs.py::test_meter_nonpositive_flow_is_refused": {
+      "weight": 0.011,
+      "priority": "boundary",
+      "rationale": "非正流量无法支持水量累计和热损反演，必须与正常历史严格区分。"
+    },
+    "test_outputs.py::test_empty_command_path_is_refused": {
+      "weight": 0.011,
+      "priority": "boundary",
+      "rationale": "空命令行路径不能悄悄落到当前目录，否则会把结果写到错误位置。"
+    },
+    "test_outputs.py::test_output_numbers_use_six_decimal_rounding": {
+      "weight": 0.011,
+      "priority": "schema",
+      "rationale": "六位小数和负零规范保证交接数值稳定，避免同一结果出现两种显示。"
+    },
+    "test_outputs.py::test_result_pairing_and_sample_count_come_from_input": {
+      "weight": 0.011,
+      "priority": "supporting",
+      "rationale": "样本数、支路数和表计配对必须来自本次输入，不能沿用上批结果。"
+    },
+    "test_outputs.py::test_eighteen_branch_batch_finishes_within_public_limit": {
+      "weight": 0.026,
+      "priority": "boundary",
+      "rationale": "十八支路公开上界必须在八秒内闭合，才能排除依赖全排列搜索的实现。"
+    }
+  }
+}
