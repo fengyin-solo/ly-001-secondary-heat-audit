@@ -650,7 +650,7 @@ def test_station_extra_key_is_refused(tmp_path):
 
 
 def test_station_bool_integer_type_is_refused(tmp_path):
-    """题面：「`sample_interval_min` 必须是不小于 5、不大于 60 的 JSON 整数，布尔值不算整数」"""
+    """题面：「采样间隔取 5 到 60 的整数，布尔值排除」"""
     payloads = _payloads()
     payloads["station"]["sample_interval_min"] = True
     process, result_path, ledger_path = _refused(tmp_path, payloads)
@@ -788,7 +788,7 @@ def test_duplicate_branch_id_is_refused(tmp_path):
 
 
 def test_meter_count_mismatch_is_refused(tmp_path):
-    """题面：「`meters` 的记录数必须与支路数相同」"""
+    """题面：「表计项数目必须与支路项相同」"""
     print("CASE SCHEMA-11 SCHEMA-21")
     payloads = _payloads()
     payloads["meters"]["meters"].pop()
@@ -884,7 +884,7 @@ def test_result_pairing_and_sample_count_come_from_input(tmp_path):
 
 
 def test_eighteen_branches_are_accepted(tmp_path):
-    """题面：「`branches` 是 2 到 18 条支路记录的数组」"""
+    """题面：「支路账列出 2 到 18 项」"""
     payloads = _payloads(branch_count=18, sample_count=20)
     input_dir, result_path, ledger_path = _case(tmp_path, payloads)
     process = _run_app(input_dir, result_path, ledger_path)
@@ -905,7 +905,7 @@ def test_eighteen_branch_batch_finishes_within_public_limit(tmp_path):
 
 
 def test_nineteen_branches_are_refused(tmp_path):
-    """题面：「`branches` 是 2 到 18 条支路记录的数组」"""
+    """题面：「支路账列出 2 到 18 项」"""
     payloads = _payloads(branch_count=19, sample_count=20)
     process, result_path, ledger_path = _refused(tmp_path, payloads)
     state = _refusal_state(process, result_path, ledger_path)
