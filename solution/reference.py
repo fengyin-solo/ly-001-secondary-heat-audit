@@ -200,7 +200,7 @@ def _validate_branches(raw: dict[str, Any], samples: int) -> list[dict[str, Any]
             raise AuditError(f"branch_id 重复: {branch_id}")
         seen.add(branch_id)
         design_flow = _number(item["design_flow_m3h"], f"branches[{index}].design_flow_m3h")
-        if design_flow <= 0:
+        if not design_flow > 0.0:
             raise AuditError("design_flow_m3h 必须大于零")
         signature = _number_array(
             item["valve_signature_m3h"],
@@ -263,7 +263,7 @@ def _validate_meters(
             f"meters[{index}].demand_kwh",
             samples,
         )
-        if any(value <= 0 for value in flow):
+        if any(not value > 0.0 for value in flow):
             raise AuditError("flow_m3h 元素必须大于零")
         if any(value < 0 for value in demand):
             raise AuditError("demand_kwh 元素不得小于零")
@@ -419,7 +419,7 @@ def _assign_meters(
         alternatives.append(trial_cost)
     second_best = min(alternatives)
     margin = second_best - best
-    if not math.isfinite(margin) or margin <= 1e-9:
+    if not math.isfinite(margin) or not margin > 1e-9:
         raise AuditError("表计到支路的配对不唯一")
     ordered_metrics = [metrics[(row, column)] for row, column in enumerate(selected)]
     return selected, ordered_metrics, best, margin
@@ -464,7 +464,10 @@ def _nnls(design: list[list[float]], target: list[float]) -> list[float]:
             for column in range(columns)
         ]
         candidates = [index for index in range(columns) if not passive[index]]
-        if not candidates or max(gradient[index] for index in candidates) <= tolerance:
+        if (
+            not candidates
+            or not max(gradient[index] for index in candidates) > tolerance
+        ):
             return values
         entering = max(candidates, key=lambda index: (gradient[index], -index))
         passive[entering] = True
@@ -491,7 +494,10 @@ def _nnls(design: list[list[float]], target: list[float]) -> list[float]:
             ratios = [
                 values[index] / (values[index] - trial[index])
                 for index in active
-                if trial[index] <= tolerance and values[index] - trial[index] > tolerance
+                if (
+                    not trial[index] > tolerance
+                    and values[index] - trial[index] > tolerance
+                )
             ]
             alpha = min(ratios) if ratios else 0.0
             values = [
@@ -499,7 +505,7 @@ def _nnls(design: list[list[float]], target: list[float]) -> list[float]:
                 for index in range(columns)
             ]
             for index in active:
-                if values[index] <= tolerance:
+                if not values[index] > tolerance:
                     values[index] = 0.0
                     passive[index] = False
         else:

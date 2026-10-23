@@ -710,6 +710,18 @@ def test_branch_wrong_type_is_refused(tmp_path):
     assert state["stdout"] == ""
     assert state["stderr"].startswith("处理未完成: ")
     assert state["ledger_exists"] is False
+    zero_payloads = _payloads()
+    zero_payloads["branches"]["branches"][0]["design_flow_m3h"] = 0.0
+    zero_process, zero_result, zero_ledger = _refused(
+        tmp_path,
+        zero_payloads,
+        "zero-design-flow",
+    )
+    zero_state = _refusal_state(zero_process, zero_result, zero_ledger)
+    assert zero_state["returncode"] == 2
+    assert zero_state["stdout"] == ""
+    assert zero_state["stderr"] == "处理未完成: design_flow_m3h 必须大于零\n"
+    assert zero_state["result_exists"] is False
 
 
 def test_meter_missing_key_is_refused(tmp_path):

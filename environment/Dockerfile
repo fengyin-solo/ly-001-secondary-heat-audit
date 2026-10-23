@@ -22,5 +22,4 @@ RUN useradd --create-home --uid 10001 auditor \
 
 ENV PYTHONDONTWRITEBYTECODE=1
 WORKDIR /app
-USER auditor
 CMD ["sleep", "infinity"]
