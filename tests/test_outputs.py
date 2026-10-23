@@ -287,11 +287,32 @@ def test_unique_assignment_margin_is_positive(static_run):
 
 
 def test_aggregate_effective_ua_matches_transient_inverse(static_run):
-    """题面：「用非负最小二乘在这些采样段上反演各支路 `ua_w_per_k`」"""
+    """题面：「聚合传热系数按支路度时加权计算」"""
     print("CASE LOSS-01 LOSS-04")
+    print("HARDCODE-BASE INPUT_SCENARIO_BASE")
     inversion = static_run["result"]["loss_inversion"]
+    station = _read_result(DATA_DIR / "station.json")
+    meters = _read_result(DATA_DIR / "meters.json")["meters"]
+    by_serial = {item["meter_serial"]: item for item in meters}
+    weighted_ua = 0.0
+    degree_total = 0.0
+    for branch in static_run["result"]["branch_balance"]:
+        returning = by_serial[branch["meter_serial"]]["return_temp_c"]
+        degrees = []
+        for sample in range(len(returning)):
+            lag_temp = 0.55 * returning[sample] + 0.45 * returning[max(0, sample - 1)]
+            degrees.append(
+                max(0.5, lag_temp - station["outdoor_temp_c"][sample])
+                * station["sample_interval_min"]
+                / 60.0
+            )
+        branch_degrees = math.fsum(degrees)
+        degree_total += branch_degrees
+        weighted_ua += branch["ua_w_per_k"] * branch_degrees
+    expected = weighted_ua / degree_total if degree_total else 0.0
     assert inversion["method"] == "lagged-degree-hours-nnls-v1"
-    assert abs(inversion["aggregate_ua_w_per_k"] - 1347.848723) <= 0.02
+    assert inversion["aggregate_ua_w_per_k"] == pytest.approx(expected, abs=0.00001)
+    assert inversion["aggregate_ua_w_per_k"] == pytest.approx(1347.848723, abs=0.02)
 
 
 def test_branch_ua_and_loss_use_lagged_degree_hours(static_run):
@@ -885,11 +906,14 @@ def test_result_pairing_and_sample_count_come_from_input(tmp_path):
 
 def test_eighteen_branches_are_accepted(tmp_path):
     """题面：「支路账列出 2 到 18 项」"""
+    print("HARDCODE-VARIANT INPUT_SCENARIO_BRANCH18")
     payloads = _payloads(branch_count=18, sample_count=20)
     input_dir, result_path, ledger_path = _case(tmp_path, payloads)
     process = _run_app(input_dir, result_path, ledger_path)
     assert process.returncode == 0
-    assert len(_read_result(result_path)["assignments"]) == 18
+    report = _read_result(result_path)
+    assert len(report["assignments"]) == 18
+    assert report["loss_inversion"]["aggregate_ua_w_per_k"] > 0
 
 
 def test_eighteen_branch_batch_finishes_within_public_limit(tmp_path):

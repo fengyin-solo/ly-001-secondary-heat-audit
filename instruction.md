@@ -58,7 +58,15 @@ degree_h[k] = max(0.5, lag_temp[k] - o[k]) * dt / 60
 
 计算；`k = 0` 时 `r[-1]` 取 `r[0]`。每个支路保留同一个有效传热系数 `ua`，并要求 `ua >= 0`。把全部支路的 `degree_h[k] / 1000` 按支路升序排成一行，就得到每个采样段的设计矩阵。对每个采样段，用站级输入热量减去该段所有表计热量之和，得到剩余损失。用非负最小二乘在这些采样段上反演各支路 `ua_w_per_k`，使残差平方和最小；不得用端到端固定温差代替滞后度时。
 
-支路热损是 `ua_w_per_k` 与该支路全部 `degree_h` 乘积之和再除以 1000。支路供入热量是表计需求与支路热损之和。站级供入、需求和热损分别取各段总和；`balance_error_kwh` 是站级输入热量减去需求总计与热损总计，保留正负号。
+支路热损是 `ua_w_per_k` 与该支路全部 `degree_h` 乘积之和再除以 1000。聚合传热系数按支路度时加权计算：
+
+```text
+aggregate_ua_w_per_k =
+  sum_branch(ua_w_per_k[branch] * sum_sample(degree_h[branch][sample]))
+  / sum_branch(sum_sample(degree_h[branch][sample]))
+```
+
+分母为全部有效支路、全部采样段的度时总和；分母为零时聚合值写 `0.0`。这个聚合不是支路 `ua_w_per_k` 的简单算术平均。支路供入热量是表计需求与支路热损之和。站级供入、需求和热损分别取各段总和；`balance_error_kwh` 是站级输入热量减去需求总计与热损总计，保留正负号。
 
 所有输出数字先按十进制四舍五入到小数点后六位，恰好半值时远离零取整；零不写成 `-0.000000`。结果中的时间样本数、支路数、排序和配对都来自本次输入。`assignment_summary.objective` 是最优配对总代价，`assignment_summary.second_best_margin` 是第二优完整配对总代价减去最优总代价。
 
